@@ -19,16 +19,25 @@
                             @csrf
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Name</label>
-                                <input type="text" class="form-control" name="name">
+                                <input type="text" class="form-control" name="name" value="{{old('name')}}">
                             </div>
+                            @error('name')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" class="form-control" name="email">
+                                <input type="email" class="form-control" name="email" value="{{old('email')}}">
                             </div>
+                            @error('email')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Password</label>
                                 <input type="password" class="form-control" name="password">
                             </div>
+                            @error('password')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
                             <div class="form-group">
                                 <label for="exampleInputEmail1">House Number</label>
                                 <input type="text" class="form-control" name="house_number">

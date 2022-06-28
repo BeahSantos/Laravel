@@ -22,10 +22,16 @@ class UserController extends Controller
 
     public function store(REQUEST $request)
     {
+        $validated = $request->validate([
+            'name' => 'required|string|min:2|max:250',
+            'email' => 'required|email',
+            'password' => 'required|string'
+        ]);
+
         $user = new User();
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = $request->password;
+            $user->name = $validated['name'];
+            $user->email = $validated['email'];
+            $user->password = $validated['password'];
             $user->save();
 
         $userAddress = new UserAddress();
@@ -60,8 +66,6 @@ class UserController extends Controller
         $user = User::where('id', $user)->first();
         $user->name = $request->name;
         $user->email = $request->email;
-        /* $user->userAddresses->house_number = $request->house_number;
-        $user->userAddresses->city = $request->city; */
         $user->save();
 
         $address = UserAddress::where('id', $user->id)->first();
@@ -74,7 +78,7 @@ class UserController extends Controller
 
     public function destroy($user){
         User::where('id', $user)->delete();
-        UserAddress::where('id', $user)->delete();
+        UserAddress::where('user_id', $user)->delete();
 
         return redirect()->route('users.index');
     }
